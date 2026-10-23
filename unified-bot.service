@@ -1,0 +1,33 @@
+[Unit]
+Description=Unified Telegram Bot (Checker + Proxy)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=botuser
+Group=botuser
+WorkingDirectory=/opt/unified_bot
+Environment="PYTHONUNBUFFERED=1"
+Environment="BOT_TOKEN=8849504334:AAFdhT7VqkoWr_NXyVUvv61BkligwbgSKFw"
+Environment="TG_CHAT_ID=8295696730"
+Environment="BOT_LOG_DIR=/var/log/unified_bot"
+ExecStart=/opt/unified_bot/venv/bin/python /opt/unified_bot/unified_bot.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=unified-bot
+
+# Güvenlik
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+# Kaynak limitleri
+LimitNOFILE=65535
+TasksMax=infinity
+
+[Install]
+WantedBy=multi-user.target
